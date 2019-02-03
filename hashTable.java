@@ -44,6 +44,21 @@ public class hashTable
         ptr.next=newNode;
     }
 
+    public static void get(int key, LLNode[] arr)
+    {
+        if(key<0)
+        {
+            System.out.println("Invalid key '"+key+"', must be zero or above");
+            return;
+        }
+        int index=hash(key)%TABLE_SIZE;
+        ptr=arr[index];
+        while(ptr!=null)
+        {
+            
+        }
+    }
+
     public static void print(LLNode[] arr)
     {
         for(int i=0;i<TABLE_SIZE;i++)
