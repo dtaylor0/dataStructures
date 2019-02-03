@@ -24,6 +24,22 @@ public class linkedList
         System.out.println("delete 2:");
         root=deleteNode(2,root);
         printLinkedList(root);
+        a.next=null;
+        b.next=null;
+        c.next=null;
+        d.next=null;
+        System.out.println("add 2:");
+        root=addNode(c,root);
+        printLinkedList(root);
+        System.out.println("add 1:");
+        root=addNode(d,root);
+        printLinkedList(root);
+        System.out.println("add 4:");
+        root=addNode(b,root);
+        printLinkedList(root);
+        System.out.println("add 6:");
+        root=addNode(a,root);
+        printLinkedList(root);
     }
 
     public static void printLinkedList(LLNode root)
@@ -36,6 +52,17 @@ public class linkedList
             root=root.next;
         }
         System.out.println();
+    }
+    
+    public static LLNode addNode(LLNode newNode,LLNode root)
+    {
+        LLNode ptr=root;
+        if(ptr==null)
+            return newNode;
+        while(ptr.next!=null)
+            ptr=ptr.next;
+        ptr.next=newNode;
+        return root;
     }
 
     public static LLNode deleteNode(int target,LLNode root)
