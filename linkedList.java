@@ -12,6 +12,9 @@ public class linkedList
         LLNode root=a;
         System.out.println("Original linked list:");
         printLinkedList(root);
+        System.out.println("Insertion sort:");
+        root=insertionSort(root);
+        printLinkedList(root);
         System.out.println("delete 4:");
         root=deleteNode(4,root);
         printLinkedList(root);
@@ -28,24 +31,36 @@ public class linkedList
         b.next=null;
         c.next=null;
         d.next=null;
+        System.out.println("Insertion sort:");
+        root=insertionSort(root);
+        printLinkedList(root);
         System.out.println("add 2:");
         root=addNode(c,root);
+        printLinkedList(root);
+        System.out.println("Insertion sort:");
+        root=insertionSort(root);
         printLinkedList(root);
         System.out.println("add 1:");
         root=addNode(d,root);
         printLinkedList(root);
-        System.out.println("add 4:");
-        root=addNode(b,root);
+        System.out.println("Insertion sort:");
+        root=insertionSort(root);
         printLinkedList(root);
         System.out.println("add 6:");
         root=addNode(a,root);
+        printLinkedList(root);
+        System.out.println("add 4:");
+        root=addNode(b,root);
+        printLinkedList(root);
+        System.out.println("Insertion sort:");
+        root=insertionSort(root);
         printLinkedList(root);
     }
 
     public static void printLinkedList(LLNode root)
     {
         if(root==null)
-            System.out.print("Linked list is empty.");
+            System.out.print("->");
         while(root!=null)
         {
             System.out.print(root.toString());
@@ -60,7 +75,11 @@ public class linkedList
         if(ptr==null)
             return newNode;
         while(ptr.next!=null)
+        {
+            if(ptr.getData()==newNode.getData())
+                return root;
             ptr=ptr.next;
+        }
         ptr.next=newNode;
         return root;
     }
@@ -93,4 +112,37 @@ public class linkedList
         return root;
     }
 
+    public static LLNode insertionSort(LLNode root)
+    {
+        if(root==null)
+            return root;
+        LLNode ptrPrev=null;
+        LLNode ptr=root;
+        LLNode insertPrev=root;
+        LLNode insert=root.next;
+        while(insert!=null)
+        {
+            while(ptr!=insert)
+            {
+                if(ptr.getData()>insert.getData())
+                {
+                    if(insertPrev.next!=null)
+                        insertPrev.next=insert.next;
+                    insert.next=ptr;
+                    if(ptrPrev!=null)
+                        ptrPrev.next=insert;
+                    else
+                        root=insert;
+                    break;
+                }
+                ptrPrev=ptr;
+                ptr=ptr.next;
+            }
+            insertPrev=insert;
+            insert=insert.next;
+            ptr=root;
+            ptrPrev=null;
+        }
+        return root;
+    }
 }
