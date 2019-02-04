@@ -1,38 +1,57 @@
 import java.lang.Math;
 public class hashTable
 {
+    private static LLNode[] arr=null;
     private static int TABLE_SIZE=10;
+    private static int NUM_VALUES=0;
+    private static int MAX_NUM=10;
     public static void main(String[] args)
     {
-        LLNode[] arr=new LLNode[TABLE_SIZE];
+        arr=new LLNode[TABLE_SIZE];
         put(3,arr);
         put(9,arr);
         put(55,arr);
         put(55,arr);
-        put(-55,arr);
-        print(arr);
+        put(45,arr);
+        put(1,arr);
+        put(65,arr);
+        put(17,arr);
+        put(5,arr);
+        put(7,arr);
+        System.out.println("Num of values: "+NUM_VALUES);
+        print();
+        System.out.println("\n\n");
+        put(8,arr);
+        System.out.println("Num of values: "+NUM_VALUES);
+        print();
+        System.out.println("\n\n");
+        LLNode ptr=get(7);
+        System.out.println("Get 7: ["+ptr.getData()+"]");
     }
 
     public static int hash(int key)
     {
-        return key*(int)Math.pow(2,32);
+        return (54*key+23)%71;
     }
 
-    public static void put(int key, LLNode[] arr)
+    public static void put(int key,LLNode[] someArr)
     {
         if(key<0)
         {
-            System.out.println("Invalid key '"+key+"', must be zero or above");
+            System.out.println("Invalid key ["+key+"], must be zero or above");
             return;
         }
-        int index=hash(key)%TABLE_SIZE;
+        if(NUM_VALUES>=MAX_NUM)
+            resize();
+        int index=(hash(key))%TABLE_SIZE;
         LLNode newNode=new LLNode(key);
-        if(arr[index]==null)
+        NUM_VALUES++;
+        if(someArr[index]==null)
         {
-            arr[index]=newNode;
+            someArr[index]=newNode;
             return;
         }
-        LLNode ptr=arr[index];
+        LLNode ptr=someArr[index];
         if(ptr.getData()==key)
             return;
         while(ptr.next!=null)
@@ -44,22 +63,44 @@ public class hashTable
         ptr.next=newNode;
     }
 
-    public static void get(int key, LLNode[] arr)
+    public static LLNode get(int key)
     {
         if(key<0)
         {
-            System.out.println("Invalid key '"+key+"', must be zero or above");
-            return;
+            System.out.println("Invalid key ["+key+"'] must be zero or above");
+            return null;
         }
         int index=hash(key)%TABLE_SIZE;
-        ptr=arr[index];
+        LLNode ptr=arr[index];
         while(ptr!=null)
         {
-            
+            if(ptr.getData()==key)
+                return ptr;
+            ptr=ptr.next;
         }
+        return null;
     }
 
-    public static void print(LLNode[] arr)
+    public static void resize()
+    {
+        int prevSize=TABLE_SIZE;
+        TABLE_SIZE*=2;
+        MAX_NUM*=2;
+        LLNode[] newArr=new LLNode[TABLE_SIZE];
+        for(int i=0;i<prevSize;i++)
+        {
+            LLNode ptr=arr[i];
+            while(ptr!=null)
+            {
+                int data=ptr.getData();
+                put(data,newArr);
+                ptr=ptr.next;
+            }
+        }
+        arr=newArr;
+    }
+
+    public static void print()
     {
         for(int i=0;i<TABLE_SIZE;i++)
         {
@@ -74,6 +115,8 @@ public class hashTable
             }
             if(i<TABLE_SIZE-1)
                 System.out.print("\n|\n");
+            else
+                System.out.println();
         }
     }
 }
