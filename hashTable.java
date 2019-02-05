@@ -1,4 +1,3 @@
-import java.lang.Math;
 public class hashTable
 {
     private static LLNode[] arr=null;
@@ -8,20 +7,21 @@ public class hashTable
     public static void main(String[] args)
     {
         arr=new LLNode[TABLE_SIZE];
-        put(3,arr);
-        put(9,arr);
-        put(55,arr);
-        put(55,arr);
-        put(45,arr);
         put(1,arr);
-        put(65,arr);
-        put(17,arr);
+        put(2,arr);
+        put(3,arr);
+        put(3,arr);
+        put(4,arr);
         put(5,arr);
+        put(6,arr);
         put(7,arr);
+        put(8,arr);
+        put(9,arr);
+        put(10,arr);
         System.out.println("Num of values: "+NUM_VALUES);
         print();
         System.out.println("\n\n");
-        put(8,arr);
+        put(11,arr);
         System.out.println("Num of values: "+NUM_VALUES);
         print();
         System.out.println("\n\n");
@@ -34,33 +34,38 @@ public class hashTable
         return (54*key+23)%71;
     }
 
-    public static void put(int key,LLNode[] someArr)
+    public static int put(int key,LLNode[] someArr)
     {
         if(key<0)
         {
             System.out.println("Invalid key ["+key+"], must be zero or above");
-            return;
+            return -1;
         }
         if(NUM_VALUES>=MAX_NUM)
+        {
             resize();
+            someArr=arr;
+        }
         int index=(hash(key))%TABLE_SIZE;
         LLNode newNode=new LLNode(key);
-        NUM_VALUES++;
         if(someArr[index]==null)
         {
             someArr[index]=newNode;
-            return;
+            NUM_VALUES++;
+            return 0;
         }
         LLNode ptr=someArr[index];
         if(ptr.getData()==key)
-            return;
+            return -1;
         while(ptr.next!=null)
         {
             if(ptr.getData()==key)
-                return;
+                return -1;
             ptr=ptr.next;
         }
         ptr.next=newNode;
+        NUM_VALUES++;
+        return 0;
     }
 
     public static LLNode get(int key)
@@ -93,7 +98,8 @@ public class hashTable
             while(ptr!=null)
             {
                 int data=ptr.getData();
-                put(data,newArr);
+                if(put(data,newArr)==0)
+                    NUM_VALUES--;
                 ptr=ptr.next;
             }
         }
