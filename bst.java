@@ -15,6 +15,9 @@ public class bst
         add(4);
         printBST(root);
         System.out.println();
+        delete(5);
+        printBST(root);
+        System.out.println();
     }
 
     public static int add(int newData)
@@ -63,6 +66,78 @@ public class bst
         return -1;
     }
 
+    public static int delete(int target)
+    {
+        if(root==null)
+            return -1;
+        bstNode ptr=root;
+        bstNode prev=null;
+        while(ptr!=null)
+        {
+            if(ptr.data==target)
+            {
+                if(prev==null)
+                {
+                    root=root.right;
+                    bstNode temp=ptr.right;
+                    while(temp.left!=null)
+                        temp=temp.left;
+                    temp.left=ptr.left;
+                    ptr=null;
+                    return 0;
+                }
+                if(ptr.left==null&&ptr.right==null)
+                {
+                    if(prev.right==ptr)
+                        prev.right=null;
+                    else if(prev.left==ptr)
+                        prev.left=null;
+                    return 0;
+                }
+                else if(ptr.left==null)
+                {
+                    if(prev.right==ptr)
+                    {
+                        prev.right=ptr.right;
+                        ptr.right=null;
+                        return 0;
+                    }
+                    else if(prev.left==ptr)
+                    {
+                        prev.left=ptr.right;
+                        ptr.right=null;
+                        return 0;
+                    }
+                }
+                else if(ptr.right==null)
+                {
+                    if(prev.right==ptr)
+                    {
+                        prev.right=ptr.left;
+                        ptr.left=null;
+                        return 0;
+                    }
+                    else if(prev.left==ptr)
+                    {
+                        prev.left=ptr.left;
+                        ptr.left=null;
+                        return 0;
+                    }
+                }
+                else
+                {
+
+                }
+            }
+            prev=ptr;
+            if(ptr.data<target)
+                ptr=ptr.right;
+            else if(ptr.data>target)
+                ptr=ptr.left;
+        }
+        return -1;
+    }
+
     public static void printBST(bstNode current)
     {
         if(current==null)
@@ -72,19 +147,5 @@ public class bst
         System.out.print(current.data);
         printBST(current.right);
         System.out.print(")");
-        /*
-        if(current.left!=null)
-        {
-            System.out.print("<-");
-            printBST(current.left);
-
-        }
-        if(current.right!=null)
-        {
-            System.out.print("->");
-            printBST(current.right);
-        }
-        System.out.print(current.data);
-        */
     }
 }
