@@ -78,12 +78,27 @@ public class bst
             {
                 if(prev==null)
                 {
-                    root=root.right;
-                    bstNode temp=ptr.right;
-                    while(temp.left!=null)
-                        temp=temp.left;
-                    temp.left=ptr.left;
-                    ptr=null;
+                    bstNode tempPtr=ptr.right;
+                    bstNode tempPrev=null;
+                    while(tempPtr.left!=null)
+                    {
+                        tempPrev=tempPtr;
+                        tempPtr=tempPtr.left;
+                    }
+                    if(tempPrev==null)
+                    {
+                        tempPtr.left=ptr.left;
+                        root=tempPtr;
+                        ptr=null;
+                    }
+                    else
+                    {
+                        tempPrev.left=null;
+                        tempPtr.left=ptr.left;
+                        tempPtr.right=ptr.right;
+                        root=tempPtr;
+                        ptr=null;
+                    }
                     return 0;
                 }
                 if(ptr.left==null&&ptr.right==null)
