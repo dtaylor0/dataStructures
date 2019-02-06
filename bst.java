@@ -85,20 +85,14 @@ public class bst
                         tempPrev=tempPtr;
                         tempPtr=tempPtr.left;
                     }
-                    if(tempPrev==null)
-                    {
-                        tempPtr.left=ptr.left;
-                        root=tempPtr;
-                        ptr=null;
-                    }
-                    else
+                    tempPtr.left=ptr.left;
+                    if(tempPrev!=null)
                     {
                         tempPrev.left=null;
-                        tempPtr.left=ptr.left;
                         tempPtr.right=ptr.right;
-                        root=tempPtr;
-                        ptr=null;
                     }
+                    root=tempPtr;
+                    ptr=null;
                     return 0;
                 }
                 if(ptr.left==null&&ptr.right==null)
