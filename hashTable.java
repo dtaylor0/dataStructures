@@ -1,9 +1,9 @@
 public class hashTable
 {
     private static LLNode[] arr=null;
-    private static int TABLE_SIZE=10;
+    private static int TABLE_SIZE=13;
     private static int NUM_VALUES=0;
-    private static int MAX_NUM=10;
+    private static int MAX_NUM=13;
     public static void main(String[] args)
     {
         arr=new LLNode[TABLE_SIZE];
@@ -18,6 +18,10 @@ public class hashTable
         put(8,arr);
         put(9,arr);
         put(10,arr);
+        put(66,arr);
+        put(72,arr);
+        put(89,arr);
+        put(91,arr);
         System.out.println("Num of values: "+NUM_VALUES);
         print();
         System.out.println("\n\n");
